@@ -39,9 +39,9 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
-  if (n === 2) {
+  if (Number.isInteger(n / 2) === true || n === 0) {
     return true
-  } else {
+  } else if (isEven(n + 1) === true) {
     return false
   }
 };
@@ -245,21 +245,58 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  if (str1.length === 0 && str2.length === 0) {
+    return true
+  } else if (str1[0] !== str2[0]) {
+    return false
+  } else if (str1[0] === str2[0]) {
+    return compareStr(str1.slice(1), str2.slice(1))
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+  var output = []
+  if (str.length === 0) {
+    return output;
+  } else if (str.length === 1) {
+    output.push(str)
+    return output
+  } else {
+    output.push(str[0])
+    return output.concat(createArray(str.slice(1)))
+  }
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+  var reversed = []
+  if (array.length === 0) {
+    return reversed
+  } else if (array.length === 1) {
+    reversed.push(array[0])
+    return reversed
+  } else {
+    reversed.push(array[array.length - 1])
+    return reversed.concat(reverseArr(array.slice(0, array.length - 1)))
+  }
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  var list = []
+  if (length === 0) {
+    return list
+  } else if (length === 1) {
+    list.push(value);
+    return list
+  } else {
+    list.push(value)
+    return list.concat(buildList(value, length - 1))
+  }
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
@@ -268,17 +305,63 @@ var buildList = function(value, length) {
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 var fizzBuzz = function(n) {
+  var arr = []
+  if (n === 0) {
+    return arr
+  } else if (n === 1) {
+    arr.push(n.toString())
+    return arr
+  } else {
+    if (n % 3 === 0 && n % 5 === 0) {
+      arr.push('FizzBuzz')
+      return fizzBuzz(n - 1).concat(arr)
+    } else if (n % 3 === 0) {
+      arr.push('Fizz')
+      return fizzBuzz(n - 1).concat(arr)
+    } else if (n % 5 === 0) {
+      arr.push('Buzz')
+      return fizzBuzz(n - 1).concat(arr)
+    } else {
+      arr.push(n.toString())
+      return fizzBuzz(n - 1).concat(arr)
+    }
+  }
 };
 
 // 20. Count the occurence of a value in a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  if (array.length === 0) {
+    return 0
+  } else if (array.length === 1) {
+    if (array[0] === value) {
+      return 1
+    } else {
+      return 0
+    }
+  } else {
+    if (array[0] === value) {
+      return 1 + countOccurrence(array.slice(1), value)
+    } else {
+      return 0 + countOccurrence(array.slice(1), value)
+    }
+  }
 };
 
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  var mapped = []
+  if (array.length === 0) {
+    return mapped
+  } else if (array.length === 1) {
+    mapped.push(callback(array[0]))
+    return mapped
+  } else if (mapped.length < array.length) {
+    mapped.push(callback(array[0]))
+    return mapped.concat(rMap(array.slice(1), callback))
+  }
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
@@ -286,6 +369,30 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+  var keys = Object.keys(obj)
+  var values = Object.values(obj)
+  if (keys.length === 0) {
+    return 0
+  } else if (keys.length === 1) {
+    if (obj[keys[0]] === key) {
+      return 1
+    } else if (typeof values[0] === 'object') {
+      return countKeysInObj(values[0])
+    } else {
+      return 0
+    }
+  } else {
+    if (obj[keys[0]] === key) {
+      delete obj[keys[0]]
+      return 1 + countKeysInObj(obj, key)
+    } else if (typeof values[0] === 'object') {
+      var keyObj = countKeysInObj(values[0])
+      delete obj[keys[0]]
+      return keyObj + countKeysInObj(obj, key)
+    } else {
+      return 0
+    }
+  }
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
