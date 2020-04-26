@@ -832,11 +832,11 @@
         expect(gcd(7, -36)).to.be.null;
         expect(gcd(-10, -58)).to.be.null;
         expect(gcd(-92, -5)).to.be.null;
-        // expect(gcd(0, 0)).to.be.null;
-        // expect(gcd(0, 5)).to.be.null;
-        // expect(gcd(5, 0)).to.be.null;
-        // expect(gcd(-5, 0)).to.be.null;
-        // expect(gcd(0, -5)).to.be.null;
+        expect(gcd(0, 0)).to.be.null;
+        expect(gcd(0, 5)).to.be.null;
+        expect(gcd(5, 0)).to.be.null;
+        expect(gcd(-5, 0)).to.be.null;
+        expect(gcd(0, -5)).to.be.null;
       });
 
       it('should use recursion by calling self', function() {
@@ -1121,7 +1121,7 @@
         expect(countOccurrence(['',null,0,'false',false], false)).to.equal(1);
         expect(countOccurrence(['',7,null,0,'0',false], null)).to.equal(1);
         expect(countOccurrence(['',7,null,0,'0',false], '')).to.equal(1);
-        // expect(countOccurrence(['',7,null,0,NaN,'0',false], NaN)).to.equal(1);
+        expect(countOccurrence(['',7,null,0,NaN,'0',false], NaN)).to.equal(1);
       });
 
       it('should use recursion by calling self', function() {
