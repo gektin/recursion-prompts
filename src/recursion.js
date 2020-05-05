@@ -676,21 +676,17 @@ var tagCount = function(tag, node) {
 var binarySearch = function(array, target, min, max) {
   var mid = Math.ceil(array.length / 2);
   var index = (mid - 1);
-  if (target > array[array.length - 1]) {
-    return null;
+  if (target > array[array.length - 1] || target < array[0]) {
+    return null
   } else if (array[index] === target) {
-    return index;
+    return index
   } else if (array[index] > target) {
-    if (binarySearch(array.slice(0,index), target) === undefined) {
-      return null;
-    } else {
-      return binarySearch(array.slice(0,index), target);
-    }
+    return binarySearch(array.slice(0,index), target);
   } else if (array[index] < target) {
     if (binarySearch(array.slice(mid), target) === null) {
-      return null;
+      return null
     } else {
-      return (mid + binarySearch(array.slice(mid), target));
+      return (mid + binarySearch(array.slice(mid), target))
     }
   }
 };
